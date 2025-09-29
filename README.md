@@ -1,6 +1,6 @@
 Socket Tabanlı Opcode Client–Server Mimarisi 🎉
 
-Lesgoooo :D !  Bu proje, client ve server arasında kendi özel protokolümüzle iletişim kurmamızı sağlıyor. Her socket geldiğinde server yeni bir thread açıyor ve progress() fonksiyonuna gönderiyor. Burada mesaj decode ediliyor, opcode’a göre işlem yapılıyor ve sonuç client’a TRAP_TABLE üzerinden dönüyor. Tadaaa :D Mutex kullandım ki dosyaya birden fazla client geldiğinde sıkıntı olmasın. Ayrıca
+Lesgoooo :D !  Bu proje, client ve server arasında kendi özel protokolümüzle iletişim kurmamızı sağlıyor. Her socket geldiğinde server yeni bir thread açıyor ve progress() fonksiyonuna gönderiyor. Burada mesaj decode ediliyor, opcode’a göre işlem yapılıyor ve sonuç client’a TRAP_TABLE üzerinden dönüyor. Tadaaa :D Mutex kullandım ki dosyaya birden fazla client geldiğinde sıkıntı olmasın. 
 
  Protokol – Nasıl Konuşuyoruz?
 
@@ -8,10 +8,7 @@ Mesaj formatımız şöyle:
 
 <LEN>#<OPCODE>[<LEN>#<ARG>...]
 
-
 LEN → ilgili kısmın byte uzunluğu
-
-# → ayraç
 
 OPCODE → ne yapacağımızı belirten komut
 
@@ -22,8 +19,6 @@ ARG → OPCODE’e bağlı parametre(ler)
 4#push4#elma → “push” komutu, argüman = “elma” (4 byte)
 
 3#pop → son eklenen kelimeyi pop et
-
-4#list → DATABASE.txt’teki tüm kelimeleri getir
 
 Bu şekilde encode/decode etmeyi de neetcode'da 1 soruyu çözerken gördüm ve baya hoşuma gitti. Ben de opcode ve argüman ayrımını tek mesajda bu şekilde yapmak istedim.
 
@@ -74,10 +69,12 @@ Mutex ile DATABASE.txt güvenli şekilde yazılıyor
 İşlem bitince socket kapanıyor, thread sonlanıyor
 
 🚀 Client Kullanımı – Hadi Test Edelim
+
 ./client push elma   # elma ekle, lesgo!
+
 ./client push armut  # armut ekle, tadaaa!
+
 ./client pop         # son eklenen pop, lesgo!
-./client list        # tüm listeyi gör
 
 
 Client komutu otomatik encode edilip server’a gidiyor, TRAP ile yanıt alıyorsun.
@@ -100,4 +97,4 @@ Server kapanırken port hala doluysa:
 pkill -f ./server  # port freed, tadaaa!
 
 
-Lesgo! 🎉 Artık mini REST-like socket API’miz hazır. Client gönderiyor, server decode ediyor, TRAP dönüyor, database güvenli 👍
+Lesgo!  Artık mini REST-like socket API’miz hazır. Client gönderiyor, server decode ediyor, TRAP dönüyor, database güvenli 👍
